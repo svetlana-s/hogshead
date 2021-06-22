@@ -35,7 +35,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private array $roles = [];
 
     /**
-     * @ORM\Column(type="json")
+     * @ORM\Column(type="boolean")
      */
     private bool $status;
 
