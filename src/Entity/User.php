@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -23,11 +24,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=180)
+     * @Assert\Email(
+     *      message = "The email '{{ value }}' is not a valid email."
+     * )
      */
     private string $email;
 
     /**
      * @ORM\Column(type="string", length=180)
+     * @Assert\NotBlank(
+     *     message = "The Name field should not be blank."
+     * )
      */
     private string $name;
 
@@ -51,6 +58,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="boolean")
      */
     private $isVerified = false;
+
+    public function __construct()
+    {
+        if (empty($this->status)) {
+            $this->status = true;
+        }
+        if (empty($this->roles)) {
+            $this->roles[] = 'ROLE_USER';
+        }
+    }
 
     public function getId(): ?int
     {
@@ -105,7 +122,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
+        // guarantee every user at least has ROLE_NOT_VERIFIED_USER
         $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
