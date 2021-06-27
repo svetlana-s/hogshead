@@ -17,8 +17,7 @@ class UserChecker implements UserCheckerInterface
         }
 
         if (!$user->isVerified()) {
-            throw new CustomUserMessageAuthenticationException('Нужно верифицировать email');
-            //throw new LockedException('');
+            throw new CustomUserMessageAuthenticationException('Before you can login, you need to confirm your email address.');
         }
     }
 

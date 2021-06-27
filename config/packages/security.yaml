@@ -23,6 +23,7 @@ security:
 
         user:
             provider: app_user_provider
+            access_denied_handler: App\Security\AccessDeniedHandler
             custom_authenticator: App\Security\AppProfileAuthenticator
             user_checker: App\Security\UserChecker
             logout:
