@@ -1,0 +1,12 @@
+<tr style="background: {{ lineColor }};">
+	<td>{{ loop.index }}</td>
+	<td>{{ user.name }}</td>
+	<td>{{ user.email }}</td>
+	<td>
+		{% if user.Verified %}
+			<a href="{{ path('app_login') }}">edit</a> 
+		{% else %}
+			not editable
+		{%endif%}
+	</td>
+</tr>

@@ -1,0 +1,33 @@
+{% extends 'user/my_base.html.twig' %}
+
+{% block title %}User List{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style type="text/css">
+	.table {
+		width: 40%;
+	}
+	</style>
+{% endblock %}
+
+{% block content %}
+	{% if users is defined %}
+		<table class="table table-bordered table-sm">
+			<caption align="top">User List</caption>
+			{% include 'user/table_column_names.html.twig'%}
+			{% for user in users %}
+				{% set lineColor = loop.first ? '#ffd191' : (loop.index is even ? '#ffffdf' : '#ffff9e')%}
+				{% include 'user/tr.html.twig' with {
+				'lineColor': lineColor,
+				'loop': loop,
+				'user': user} only %}
+			{% endfor %}
+		</table>
+	{% else %}
+		<p>There is no any user.</p>
+	{% endif %}
+
+	{{ 'And now we have ' ~ today|date('d M Y') }}
+
+{% endblock %}

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome from my_base!{% endblock %}</title>
+        
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+
+    </head>
+    <body>
+        {% block header %}
+        <p>There will be a site menu</p>
+        {% endblock %}
+
+        {% block content %}
+        <p>Default page content</p>
+        {% endblock %}
+
+        {% block footer %}
+        <p>This is footer</p>
+        {% endblock %}
+    </body>
+</html>
