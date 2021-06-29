@@ -12,12 +12,16 @@ class UserChecker implements UserCheckerInterface
 {
     public function checkPreAuth(UserInterface $user)
     {
-        if ($user->isVerified()) {
+        if ($user->isVerified() && $user->getStatus()) {
             return;
         }
 
         if (!$user->isVerified()) {
             throw new CustomUserMessageAuthenticationException('Before you can login, you need to confirm your email address.');
+        }
+
+        if (!$user->getStatus()) {
+            throw new CustomUserMessageAuthenticationException('Your account has been locked. Contact the admin at hogshead@gmail.com to unlock it.');
         }
     }
 
