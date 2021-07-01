@@ -3,24 +3,41 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    {% for flashError in app.flashes('verify_email_error') %}
-        <div class="alert alert-danger" role="alert">{{ flashError }}</div>
-    {% endfor %}
+<body class="text-center">
+    <main class="form-signin">
+        {% for flashError in app.flashes('verify_email_error') %}
+            <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+        {% endfor %}
 
-    <h1>Register</h1>
+        <h1 class="h3 mb-3 fw-normal">Sign Up</h1>
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.name) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
+        {{ form_start(registrationForm, {'attr': {'novalidate': 'novalidate'}}) }}
+            <div class="form-floating">
+                {{ form_widget(registrationForm.name, { 'attr': {'class': 'form-control'}}) }}
+                {{ form_label(registrationForm.name) }}
+                {{ form_errors(registrationForm.name) }}
+            </div>
 
-        <button type="submit" class="btn btn-lg btn-primary">Register</button>
-    {{ form_end(registrationForm) }}
-    <form action="login">
-        <button class="btn btn-lg btn-primary" type="submit">
-            Or login
-        </button>
-    </form>
+            <div class="form-floating">
+                {{ form_widget(registrationForm.email, { 'attr': {'class': 'form-control'}}) }}
+                {{ form_label(registrationForm.email) }}
+                {{ form_errors(registrationForm.email) }}
+            </div>
+
+            <div class="form-floating">
+                {{ form_widget(registrationForm.plainPassword, { 'attr': {'class': 'form-control'}}) }}
+                {{ form_label(registrationForm.plainPassword, 'Password') }}
+                {{ form_errors(registrationForm.plainPassword) }}
+            </div>
+        
+            <button type="submit" class="w-100 btn btn-lg btn-primary">Sign Up</button>
+        {{ form_end(registrationForm) }}
+    
+        <div class="lead">
+            If you have an account - <a href="/login">Sign In</a>
+        </div>
+
+    </main>
+
+</body>
 {% endblock %}
