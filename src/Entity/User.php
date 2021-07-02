@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -12,6 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+ * @ORM\Table(name="users")
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -20,7 +23,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id = null;
 
     /**
      * @ORM\Column(type="string", length=180)
@@ -59,6 +62,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $isVerified = false;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Fanfic::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $fanfics;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $comments;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Preference::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $preferences;
+
     public function __construct()
     {
         if (empty($this->status)) {
@@ -67,6 +85,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         if (empty($this->roles)) {
             $this->roles[] = 'ROLE_USER';
         }
+        $this->fanfics = new ArrayCollection();
+        $this->comments = new ArrayCollection();
+        $this->preferences = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -190,6 +211,96 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Fanfic[]
+     */
+    public function getFanfics(): Collection
+    {
+        return $this->fanfics;
+    }
+
+    public function addFanfic(Fanfic $fanfic): self
+    {
+        if (!$this->fanfics->contains($fanfic)) {
+            $this->fanfics[] = $fanfic;
+            $fanfic->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFanfic(Fanfic $fanfic): self
+    {
+        if ($this->fanfics->removeElement($fanfic)) {
+            // set the owning side to null (unless already changed)
+            if ($fanfic->getUser() === $this) {
+                $fanfic->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getUser() === $this) {
+                $comment->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Preference[]
+     */
+    public function getPreferences(): Collection
+    {
+        return $this->preferences;
+    }
+
+    public function addPreference(Preference $preference): self
+    {
+        if (!$this->preferences->contains($preference)) {
+            $this->preferences[] = $preference;
+            $preference->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePreference(Preference $preference): self
+    {
+        if ($this->preferences->removeElement($preference)) {
+            // set the owning side to null (unless already changed)
+            if ($preference->getUser() === $this) {
+                $preference->setUser(null);
+            }
+        }
 
         return $this;
     }
