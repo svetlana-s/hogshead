@@ -8,6 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=CommentRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  * @ORM\Table(name="comments")
  */
 class Comment
@@ -71,6 +72,14 @@ class Comment
         $this->date = $date;
 
         return $this;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setDateValue()
+    {
+        $this->date = new \DateTime();
     }
 
     public function getFanfic(): ?Fanfic
