@@ -27,5 +27,13 @@ services:
                 name: 'doctrine.event_listener'
                 event: 'prePersist'
                 lazy: true
+
+    App\EventListener\CurrentUserSetter:
+        tags:
+            -
+                name: 'doctrine.event_listener'
+                event: 'prePersist'
+                lazy: true
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

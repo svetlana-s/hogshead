@@ -3,9 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\FandomRepository;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
 
 /**
  * @ORM\Entity(repositoryClass=FandomRepository::class)
@@ -28,17 +28,22 @@ class Fandom
     /**
      * @ORM\OneToMany(targetEntity=Fanfic::class, mappedBy="fandom", orphanRemoval=true)
      */
-    private ArrayCollection $fanfics;
+    private PersistentCollection $fanfics;
 
     /**
      * @ORM\OneToMany(targetEntity=Preference::class, mappedBy="fandom", orphanRemoval=true)
      */
-    private ArrayCollection $preferences;
+    private PersistentCollection $preferences;
 
     public function __construct()
     {
-        $this->fanfics = new ArrayCollection();
-        $this->preferences = new ArrayCollection();
+        $this->fanfics = new PersistentCollection();
+        $this->preferences = new PersistentCollection();
+    }
+
+    public function __toString(): string
+    {
+        return $this->name;
     }
 
     public function getId(): ?int

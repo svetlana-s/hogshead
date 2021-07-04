@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Fanfic;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class FanficCrudController extends AbstractCrudController
@@ -18,6 +19,7 @@ class FanficCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnForm(),
+            AssociationField::new('fandom'),
             TextField::new('title'),
         ];
     }
