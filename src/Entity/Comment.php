@@ -8,7 +8,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=CommentRepository::class)
- * @ORM\HasLifecycleCallbacks()
  * @ORM\Table(name="comments")
  */
 class Comment
@@ -31,7 +30,7 @@ class Comment
     /**
      * @ORM\Column(type="datetime")
      */
-    private $date;
+    private $lastDateUpdate;
 
     /**
      * @ORM\ManyToOne(targetEntity=Fanfic::class, inversedBy="comments")
@@ -62,24 +61,16 @@ class Comment
         return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getLastDateUpdate(): ?\DateTimeInterface
     {
-        return $this->date;
+        return $this->lastDateUpdate;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    public function setLastDateUpdate(\DateTimeInterface $lastDateUpdate): self
     {
-        $this->date = $date;
+        $this->lastDateUpdate = $lastDateUpdate;
 
         return $this;
-    }
-
-    /**
-     * @ORM\PrePersist
-     */
-    public function setDateValue()
-    {
-        $this->date = new \DateTime();
     }
 
     public function getFanfic(): ?Fanfic

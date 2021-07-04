@@ -24,10 +24,10 @@ class Fanfic
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(
-     *     message = "The Name field should not be blank."
+     *     message = "The Title field should not be blank."
      * )
      */
-    private string $name;
+    private string $title;
 
     /**
      * @ORM\Column(type="datetime")
@@ -67,14 +67,14 @@ class Fanfic
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getTitle(): ?string
     {
-        return $this->name;
+        return $this->title;
     }
 
-    public function setName(string $name): self
+    public function setTitle(string $title): self
     {
-        $this->name = $name;
+        $this->title = $title;
 
         return $this;
     }

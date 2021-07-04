@@ -19,7 +19,7 @@ class CommentCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnForm(),
-            TextEditorField::new('content'),
+            TextEditorField::new('content', 'Your comment'),
         ];
     }
 }

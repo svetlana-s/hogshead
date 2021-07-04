@@ -58,6 +58,11 @@ class Chapter
      */
     private Fanfic $fanfic;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $lastDateUpdate;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -119,6 +124,18 @@ class Chapter
     public function setFanfic(?Fanfic $fanfic): self
     {
         $this->fanfic = $fanfic;
+
+        return $this;
+    }
+
+    public function getLastDateUpdate(): ?\DateTimeInterface
+    {
+        return $this->lastDateUpdate;
+    }
+
+    public function setLastDateUpdate(\DateTimeInterface $lastDateUpdate): self
+    {
+        $this->lastDateUpdate = $lastDateUpdate;
 
         return $this;
     }
