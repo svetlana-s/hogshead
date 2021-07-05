@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Fanfic;
+use App\Entity\Chapter;
 use App\Entity\Comment;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -33,7 +34,8 @@ class ProfileDashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linktoRoute('Back to the website', 'fas fa-home', 'homepage');
-        yield MenuItem::linkToCrud('Fanfics', 'fas fa-map-marker-alt', Fanfic::class);
+        yield MenuItem::linkToCrud('Fanfics', 'fas fa-book', Fanfic::class);
+        yield MenuItem::linkToCrud('Chapters', 'fa fa-file-text', Chapter::class);
         yield MenuItem::linkToCrud('Comments', 'fas fa-comments', Comment::class);
     }
 }

@@ -35,6 +35,9 @@ class Comment
     /**
      * @ORM\ManyToOne(targetEntity=Fanfic::class, inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank(
+     *     message = "The Fanfic field should not be blank."
+     * )
      */
     private Fanfic $fanfic;
 

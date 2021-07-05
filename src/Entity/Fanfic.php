@@ -37,6 +37,9 @@ class Fanfic
     /**
      * @ORM\ManyToOne(targetEntity=Fandom::class, inversedBy="fanfics")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank(
+     *     message = "The Fandom field should not be blank."
+     * )
      */
     private Fandom $fandom;
 
@@ -60,6 +63,11 @@ class Fanfic
     {
         $this->chapters = new ArrayCollection();
         $this->comments = new ArrayCollection();
+    }
+
+    public function __toString(): string
+    {
+        return $this->title;
     }
 
     public function getId(): ?int

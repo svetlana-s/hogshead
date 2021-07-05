@@ -2,6 +2,7 @@
 
 namespace App\EventListener;
 
+use App\Entity\Chapter;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Symfony\Component\Security\Core\Security;
 
@@ -18,6 +19,12 @@ class CurrentUserSetter
 	public function prePersist(LifecycleEventArgs $args)
 	{
 		$entity = $args->getEntity();
+		
+		if ($entity instanceof Chapter)
+		{
+			return;
+		}
+		
 		$entity->setUser($this->security->getUser());
 	}	
 }

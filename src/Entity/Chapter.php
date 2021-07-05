@@ -22,10 +22,10 @@ class Chapter
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(
-     *     message = "The Name field should not be blank."
+     *     message = "The Title field should not be blank."
      * )
      */
-    private string $name;
+    private string $title;
 
     /**
      * @ORM\Column(type="integer")
@@ -63,19 +63,24 @@ class Chapter
      */
     private $lastDateUpdate;
 
+    public function __toString(): string
+    {
+        return $this->number . '. ' . $this->title;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getTitle(): ?string
     {
-        return $this->name;
+        return $this->title;
     }
 
-    public function setName(string $name): self
+    public function setTitle(string $title): self
     {
-        $this->name = $name;
+        $this->title = $title;
 
         return $this;
     }
