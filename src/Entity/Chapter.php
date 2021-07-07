@@ -63,6 +63,12 @@ class Chapter
      */
     private $lastDateUpdate;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="chapters")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
     public function __toString(): string
     {
         return $this->number . '. ' . $this->title;
@@ -141,6 +147,18 @@ class Chapter
     public function setLastDateUpdate(\DateTimeInterface $lastDateUpdate): self
     {
         $this->lastDateUpdate = $lastDateUpdate;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

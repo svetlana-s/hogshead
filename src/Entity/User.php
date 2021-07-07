@@ -77,6 +77,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $preferences;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Chapter::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $chapters;
+
     public function __construct()
     {
         if (empty($this->status)) {
@@ -88,6 +93,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->fanfics = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->preferences = new ArrayCollection();
+        $this->chapters = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -299,6 +305,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($preference->getUser() === $this) {
                 $preference->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Chapter[]
+     */
+    public function getChapters(): Collection
+    {
+        return $this->chapters;
+    }
+
+    public function addChapter(Chapter $chapter): self
+    {
+        if (!$this->chapters->contains($chapter)) {
+            $this->chapters[] = $chapter;
+            $chapter->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChapter(Chapter $chapter): self
+    {
+        if ($this->chapters->removeElement($chapter)) {
+            // set the owning side to null (unless already changed)
+            if ($chapter->getUser() === $this) {
+                $chapter->setUser(null);
             }
         }
 
