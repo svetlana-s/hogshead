@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Security;
 
 use App\Entity\User;
 use Symfony\Component\Security\Core\Exception\LockedException;
-use Symfony\Component\Security\Core\User\UserCheckerInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\{UserInterface, UserCheckerInterface};
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 
 class UserChecker implements UserCheckerInterface
@@ -23,9 +24,5 @@ class UserChecker implements UserCheckerInterface
         if (!$user->getStatus()) {
             throw new CustomUserMessageAuthenticationException('Your account has been locked. Contact the admin at hogshead@gmail.com to unlock it.');
         }
-    }
-
-    public function checkPostAuth(UserInterface $user)
-    {
     }
 }

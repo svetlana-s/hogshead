@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\EventListener;
 
 use App\Entity\User;
@@ -8,7 +10,7 @@ use Symfony\Component\Security\Core\Security;
 
 class CurrentUserSetter
 {
-	private $security;
+	private Security $security;
 
 	public function __construct(Security $security)
 	{
