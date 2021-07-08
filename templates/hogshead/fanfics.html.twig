@@ -3,9 +3,10 @@
 {% block title %}Hogshead.com{% endblock %}
 
 {% block body %}
+	{% include 'hogshead/header.html.twig'%}
 	<body>
-		<h1 class="h3 mb-3 fw-normal">All Fanfics about {{ fandom }}:</h1>
-
+		<h1 class="h3 mb-3 fw-normal mx-5">All Fanfics about {{ fandom }}:</h1>
+		<div class="mx-5">
 		{% if fanfics is defined %}
 			{% for fanfic in fanfics %}
 				<a href="{{ path('homepage') }}">{{ fanfic }}</a><br>
@@ -13,5 +14,6 @@
 		{% else %}
 			<p>There is no any fanfic.</p>
 		{% endif %}
+		</div>
 	</body>
 {% endblock %}
