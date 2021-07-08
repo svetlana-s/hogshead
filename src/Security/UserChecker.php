@@ -25,4 +25,8 @@ class UserChecker implements UserCheckerInterface
             throw new CustomUserMessageAuthenticationException('Your account has been locked. Contact the admin at hogshead@gmail.com to unlock it.');
         }
     }
+
+    public function checkPostAuth(UserInterface $user)
+    {
+    }
 }

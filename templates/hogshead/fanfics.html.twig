@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hogshead.com{% endblock %}
+
+{% block body %}
+	<body>
+		<h1 class="h3 mb-3 fw-normal">All Fanfics about {{ fandom }}:</h1>
+
+		{% if fanfics is defined %}
+			{% for fanfic in fanfics %}
+				<a href="{{ path('homepage') }}">{{ fanfic }}</a><br>
+			{% endfor %}
+		{% else %}
+			<p>There is no any fanfic.</p>
+		{% endif %}
+	</body>
+{% endblock %}

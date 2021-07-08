@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hogshead.com{% endblock %}
+
+{% block body %}
+	<body>
+		<h1 class="h3 mb-3 fw-normal">All Fandoms:</h1>
+
+		{% for fandom in fandoms %}
+			<a href="{{ path('fanfics', { name: fandom.name }) }}">{{ fandom }}</a><br>
+		{% endfor %}
+	</body>
+{% endblock %}
